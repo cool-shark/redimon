@@ -2,7 +2,7 @@
 redimon
 =================
 
-is a simple redis monitoring tool with multiple master/node server support. built with flask and redis-py.
+redimon, is a simple redis monitoring tool with multiple master/node server support. built with flask and redis-py.
 
 =================
 installation & running
