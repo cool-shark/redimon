@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>redimon</title>
+        <link rel="stylesheet" href="static/css/reset.css" type="text/css" media="screen, projection" />
+        <link rel="stylesheet" href="static/css/style.css" type="text/css" media="screen, projection" />
+        <script type="text/javascript" src="static/js/jquery.min.js"></script>
+        <script type="text/javascript">
+        function update() {
+            $.ajax({
+              url: "/ajax",
+              dataType: "json",
+              success: function(data){
+                $.each(data, function(id, values) {
+                    $.each(values, function(key, value) {
+                        $('#' + key).html(value);
+                        console.log(key);
+                    });
+                });
+
+              }
+            });
+        }
+
+        $(function() {
+            setInterval( "update();", 5000);
+        });
+        </script>
+    </head>
+    <body>
+    {% for stat in stats %}
+        <div class="container">
+            <h1> {{ stat.server_name[0] }}:{{ stat.server_name[1] }} {% if stat.role %} ({{ stat.role }}) {% endif %} </h1>
+            <div class="stat">
+                <div class="info_line">
+                    <span class="info" style="width:50px !important">
+                        system status
+                    </span> <br />
+                    <span class="{{ stat.status }}" id="{{ stat.server_name[0] }}_status">
+                   {{ stat.status }}
+                    </span>
+                </div>
+                {% if stat.status == 'up' %}
+                <div class="info_line">
+                    <span class="info">
+                        connected clients
+                    </span>
+                    <span class="{{ stat.status }}" id="{{ stat.addr }}_connected_clients">
+                        {{stat.connected_clients}}
+                    </span>
+                </div>
+
+                <div class="info_line">
+                    <span class="info" id="{{ stat.addr }}_info">
+                        memory usage
+                    </span>
+
+                    <span class="{{ stat.status }}" id="{{ stat.addr }}_used_memory">
+                        {{stat.used_memory_human}}
+                    </span>
+                </div>
+                <h2> details </h2>
+                <div id="detail">
+                    <div class="detail_line">uptime in days: <span class="line_span" id="{{ stat.addr }}_uptime_in_day">{{ stat.uptime_in_days }}</span></div>
+                    <div class="detail_line">uptime in seconds: <span class="line_span" id="{{ stat.addr }}_uptime_in_second">{{ stat.uptime_in_seconds }}</span></div>
+                    <div class="detail_line">bg save in progress: <span class="line_span" id="{{ stat.addr }}_uptime_in_progress">{{ stat.bgsave_in_progress }}</span></div>
+                    <div class="detail_line">last save:<span class="line_span" id="{{ stat.addr }}_last_save">{{ stat.last_save_humanized }}</span></div>
+                    <div class="detail_line">multiplexing api: <span class="line_span" id="{{ stat.addr }}_multiplexing_api">{{ stat.multiplexing_api }}</span></div>
+                    <div class="detail_line">number of connected slaves: <span class="line_span" id="{{ stat.addr }}_connected_slaves">{{ stat.connected_slaves }}</span></div>
+                    <div class="detail_line">number of blocked clients: <span class="line_span" id="{{ stat.addr }}_blocked_clients">{{stat.blocked_clients}}</span></div>
+                    <div class="detail_line">total connections received: <span class="line_span" id="{{ stat.addr }}_total_connections_received">{{stat.total_connections_received}}</span></div>
+                    <div class="detail_line">redis version: <span class="line_span" id="{{ stat.addr }}_redis_version">{{stat.redis_version}}</span></div>
+                    <div class="detail_line">process id:    <span class="line_span" id="{{ stat.addr }}_process_id">#{{stat.process_id}}</span></div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+    <div class="clear"></div>
+
+    <div id="footer">
+        <div id="footer_text">
+        <span>
+            powered by <a href="https://github.com/cool-shark/redimon">redimon</a>
+        </span>
+        </div>
+    </div>
+
+    </body>
+</html>
