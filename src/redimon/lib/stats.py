@@ -7,16 +7,18 @@ class RedisMonitor(object):
     def __init__(self, servers):
         self.servers = servers
 
-    def getStats(self, json = False):
+    def getStats(self, json = None):
         response = []
         for server in self.servers:
             response.append(self.getStatsPerServer(server))
 
         if json:
+            new_response = []
             for item in response:
                 for key, value in item.items():
                     new_key = item.get("addr") + "_" + key
-                    item.update({new_key: value})
+                    new_response.append({new_key: value})
+            return new_response
 
         return response
 
