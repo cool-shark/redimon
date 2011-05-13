@@ -18,6 +18,7 @@ class RedisMonitor(object):
                 for key, value in item.items():
                     new_key = item.get("addr") + "_" + key
                     new_response.append({new_key: value})
+
             return new_response
 
         return response
@@ -44,7 +45,15 @@ class RedisMonitor(object):
             }
 
         info.update({
-            "addr": info.get("server_name")[0].replace(".", "-") +  str(info.get("server_name")[1])
+            "addr"             : info.get("server_name")[0].replace(".", "-") +  str(info.get("server_name")[1]),
+        })
+
+        screen_strategy = 'normal'
+        if info.get("status") == 'down':
+            screen_strategy = 'hidden'
+
+        info.update({
+            "screen_strategy": screen_strategy,
         })
 
         return info

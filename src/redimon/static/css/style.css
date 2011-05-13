@@ -113,3 +113,8 @@ h2 {
     font-weight:bold;
     float: right;
 }
+
+.hidden {
+    display: none;
+}
+
