@@ -44,7 +44,7 @@ class RedisMonitor(object):
             }
 
         info.update({
-            "addr": info.get("server_name")[0].replace(".", "-")
+            "addr": info.get("server_name")[0].replace(".", "-") +  str(info.get("server_name")[1])
         })
 
         return info

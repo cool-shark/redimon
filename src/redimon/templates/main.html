@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="static/css/style.css" type="text/css" media="screen, projection" />
         <script type="text/javascript" src="static/js/jquery.min.js"></script>
         <script type="text/javascript">
+        var opacity = 0.7, toOpacity = 0.9, duration = 250;
         function update() {
             $.ajax({
               url: "/ajax",
@@ -15,7 +16,6 @@
                 $.each(data, function(id, values) {
                     $.each(values, function(key, value) {
                         $('#' + key).html(value);
-                        console.log(key);
                     });
                 });
 
@@ -37,7 +37,7 @@
                     <span class="info" style="width:50px !important">
                         system status
                     </span> <br />
-                    <span class="{{ stat.status }}" id="{{ stat.server_name[0] }}_status">
+                    <span class="{{ stat.status }}" id="{{ stat.addr }}_status">
                    {{ stat.status }}
                     </span>
                 </div>
@@ -56,16 +56,16 @@
                         memory usage
                     </span>
 
-                    <span class="{{ stat.status }}" id="{{ stat.addr }}_used_memory">
+                    <span class="{{ stat.status }}" id="{{ stat.addr }}_used_memory_human">
                         {{stat.used_memory_human}}
                     </span>
                 </div>
                 <h2> details </h2>
                 <div id="detail">
-                    <div class="detail_line">uptime in days: <span class="line_span" id="{{ stat.addr }}_uptime_in_day">{{ stat.uptime_in_days }}</span></div>
-                    <div class="detail_line">uptime in seconds: <span class="line_span" id="{{ stat.addr }}_uptime_in_second">{{ stat.uptime_in_seconds }}</span></div>
-                    <div class="detail_line">bg save in progress: <span class="line_span" id="{{ stat.addr }}_uptime_in_progress">{{ stat.bgsave_in_progress }}</span></div>
-                    <div class="detail_line">last save:<span class="line_span" id="{{ stat.addr }}_last_save">{{ stat.last_save_humanized }}</span></div>
+                    <div class="detail_line">uptime in days: <span class="line_span" id="{{ stat.addr }}_uptime_in_days">{{ stat.uptime_in_days }}</span></div>
+                    <div class="detail_line">uptime in seconds: <span class="line_span" id="{{ stat.addr }}_uptime_in_seconds">{{ stat.uptime_in_seconds}}</span></div>
+                    <div class="detail_line">bg save in progress: <span class="line_span" id="{{ stat.addr }}_bgsave_in_progress">{{ stat.bgsave_in_progress }}</span></div>
+                    <div class="detail_line">last save:<span class="line_span" id="{{ stat.addr }}_last_save_humanized">{{ stat.last_save_humanized }}</span></div>
                     <div class="detail_line">multiplexing api: <span class="line_span" id="{{ stat.addr }}_multiplexing_api">{{ stat.multiplexing_api }}</span></div>
                     <div class="detail_line">number of connected slaves: <span class="line_span" id="{{ stat.addr }}_connected_slaves">{{ stat.connected_slaves }}</span></div>
                     <div class="detail_line">number of blocked clients: <span class="line_span" id="{{ stat.addr }}_blocked_clients">{{stat.blocked_clients}}</span></div>

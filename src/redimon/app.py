@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 # main view
 @app.route('/')
-def hello_world():
+def index():
     stats = redis_monitor.getStats()
     return render_template('main.html', stats = stats)
 
