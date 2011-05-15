@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 
-import redis, datetime, simplejson
+import redis, datetime
+try:
+    import json
+except:
+    import simplejson as json
+
 
 class RedisMonitor(object):
 
