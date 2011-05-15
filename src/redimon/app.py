@@ -3,7 +3,12 @@ from flask import Flask, render_template, jsonify
 from lib.stats import RedisMonitor
 from settings import SERVERS
 
-import simplejson, datetime
+try:
+    import json
+except:
+    import simplejson as json
+
+import datetime
 
 redis_monitor = RedisMonitor(SERVERS)
 
@@ -21,7 +26,7 @@ def index():
 def ajax():
     stats           = redis_monitor.getStats(True)
     datetimeHandler = lambda obj: obj.isoformat() if isinstance(obj, datetime.datetime) else None
-    return simplejson.dumps(stats, default = datetimeHandler)
+    return json.dumps(stats, default = datetimeHandler)
 
 # run the app.
 if __name__ == '__main__':
