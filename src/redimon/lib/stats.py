@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import redis, datetime
-try:
-    import json
-except:
-    import simplejson as json
 
 
 class RedisMonitor(object):
@@ -12,12 +8,12 @@ class RedisMonitor(object):
     def __init__(self, servers):
         self.servers = servers
 
-    def getStats(self, json = None):
+    def getStats(self, jsonOutput = None):
         response = []
         for server in self.servers:
             response.append(self.getStatsPerServer(server))
 
-        if json:
+        if jsonOutput:
             new_response = []
             for item in response:
                 for key, value in item.items():
