@@ -36,15 +36,16 @@
         }
 
         $(function() {
-            setInterval( "update();", 5000);
+            setInterval("update();", 5000);
         });
         </script>
     </head>
     <body>
     {% for stat in stats %}
         <div class="container">
-            <h1> {{ stat.server_name[0] }}:{{ stat.server_name[1] }} {% if stat.role %} ({{ stat.role }}) {% endif %} </h1>
+
             <div class="stat">
+            <h1> {{ stat.server_name[0] }}:{{ stat.server_name[1] }} {% if stat.role %} ({{ stat.role }}) {% endif %} </h1>
                 <div class="info_line">
                     <span class="info" style="width:50px !important">
                         system status
