@@ -35,7 +35,7 @@ class RedisMonitor(object):
                 "last_save_humanized": datetime.datetime.fromtimestamp(info.get("last_save_time"))
             })
 
-            connection.connection.disconnect()
+            connection.connection_pool.disconnect()
 
         except redis.exceptions.ConnectionError:
             info =  {
